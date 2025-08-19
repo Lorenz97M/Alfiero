@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Ordina la tua pizza 🍕</title>
+  <style>
+    body { font-family: Garamond, sans-serif; margin: 40px; max-width: 500px; }
+    h1 { color: #d32f2f; }
+    label { display: block; margin-top: 15px; }
+    input, select, textarea, button { width: 100%; padding: 8px; margin-top: 5px; }
+    button { background-color: #d32f2f; color: white; border: none; cursor: pointer; }
+    button:hover { background-color: #b71c1c; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <h1>Ordina la tua pizza 🍕</h1>
+
+  <form action="https://formspree.io/f/myzpablp" method="POST">
+    <label>Nome:
+      <input type="text" name="nome" required>
+    </label>
+
+    <label>Telefono:
+      <input type="text" name="telefono" required>
+    </label>
+
+    <label>Tipo di ordine:
+      <select name="tipo_ordine" id="tipo_ordine" required>
+        <option value="asporto">Asporto</option>
+        <option value="domicilio">Domicilio</option>
+      </select>
+    </label>
+
+    <!-- Orario sempre visibile -->
+    <label>Orario:
+      <select name="orario" id="orario">
+        <option value="7:15">7:15</option>
+        <option value="8:00">8:00</option>
+        <option value="9:00">9:00</option>
+      </select>
+    </label>
+
+    <!-- Campi extra solo per domicilio -->
+    <div id="consegna_extra" class="hidden">
+      <label>Zona di consegna:
+        <select name="zona" id="zona">
+          <option value="marina_di_carrara">Marina di Carrara</option>
+          <option value="carrara">Carrara</option>
+          <option value="marina_di_massa">Marina di Massa</option>
+          <option value="massa">Massa</option>
+          <option value="forte_dei_marmi">Forte dei Marmi</option>
+        </select>
+      </label>
+    </div>
+
+    <label>Pizza:
+      <select name="pizza" required>
+        <option>Margherita</option>
+        <option>Diavola</option>
+        <option>Capricciosa</option>
+        <option>Quattro Formaggi</option>
+        <option>Vegetariana</option>
+      </select>
+    </label>
+
+    <label>Quantità:
+      <input type="number" name="quantità" value="1" min="1" required>
+    </label>
+
+    <label>Note aggiuntive:
+      <textarea name="note" rows="3"></textarea>
+    </label>
+
+    <!-- Messaggio di conferma -->
+    <input type="hidden" name="_next" value="grazie.html">
+
+    <button type="submit">Invia ordine</button>
+  </form>
+
+  <script>
+    const tipoOrdine = document.getElementById("tipo_ordine");
+    const consegnaExtra = document.getElementById("consegna_extra");
+    const zona = document.getElementById("zona");
+    const orario = document.getElementById("orario");
+
+    // Mostra/nasconde i campi extra in base alla scelta Asporto/Domicilio
+    tipoOrdine.addEventListener("change", () => {
+      if (tipoOrdine.value === "domicilio") {
+        consegnaExtra.classList.remove("hidden");
+        aggiornaOrari(); // applico subito la regola della zona
+      } else {
+        consegnaExtra.classList.add("hidden");
+        resetOrariAsporto();
+      }
+    });
+
+    // Aggiorna orari in base alla zona scelta per domicilio
+    zona.addEventListener("change", aggiornaOrari);
+
+    function aggiornaOrari() {
+      orario.innerHTML = "";
+      if (zona.value === "forte_dei_marmi") {
+        ["7:15", "8:00", "9:00"].forEach(h => {
+          let opt = document.createElement("option");
+          opt.value = h;
+          opt.textContent = h;
+          orario.appendChild(opt);
+        });
+      } else {
+        ["7:15", "9:00"].forEach(h => {
+          let opt = document.createElement("option");
+          opt.value = h;
+          opt.textContent = h;
+          orario.appendChild(opt);
+        });
+      }
+    }
+
+    function resetOrariAsporto() {
+      orario.innerHTML = "";
+      ["7:15", "8:00", "9:00"].forEach(h => {
+        let opt = document.createElement("option");
+        opt.value = h;
+        opt.textContent = h;
+        orario.appendChild(opt);
+      });
+    }
+  </script>
+</body>
+</html>
