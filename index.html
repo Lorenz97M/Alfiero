@@ -5,23 +5,29 @@
 <title>Ordina la tua pizza 🍕</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-  body { font-family: 'Garamond', serif; margin:0; padding:0; background-color:#fff3e0; color:#333; }
-  header { background-color:#d32f2f; text-align:center; padding:20px 10px; }
-  header img.stemma { max-width:120px; }
-  main { max-width:600px; margin:30px auto; padding:0 20px; }
-  form { background-color:#fff; padding:20px; border-radius:15px; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
-  label { display:block; margin-top:15px; }
-  input, select, button { width:100%; padding:10px; margin-top:5px; font-size:16px; border-radius:5px; border:1px solid #ccc; box-sizing:border-box; }
-  button { background-color:#d32f2f; color:white; border:none; cursor:pointer; transition:background 0.3s; font-size:18px; }
-  button:hover { background-color:#b71c1c; }
-  .hidden { display:none; }
-  .pizza-item { display:flex; align-items:center; justify-content:space-between; background-color:#fff3e0; border:1px solid #d32f2f; border-radius:10px; padding:10px 15px; margin-bottom:12px; }
-  .pizza-left { display:flex; align-items:flex-start; }
-  .pizza-left-top { display:flex; align-items:flex-start; }
-  .pizza-left-top input[type="checkbox"] { width:20px; height:20px; margin-right:12px; cursor:pointer; margin-top:4px; }
-  .pizza-info strong { font-size:18px; color:#d32f2f; }
-  .pizza-info span { font-size:14px; color:#555; display:block; margin-top:2px; }
-  .pizza-qty input[type="number"] { width:60px; font-size:16px; padding:5px; }
+  body { font-family: 'Garamond', serif; margin: 0; padding: 0; background-color: #fff3e0; color: #333; }
+  header { background-color: #d32f2f; text-align: center; padding: 20px 10px; }
+  header img.stemma { max-width: 120px; }
+  main { max-width: 600px; margin: 30px auto; padding: 0 20px; }
+  form { background-color: #fff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+  label { display: block; margin-top: 15px; }
+  input, select, textarea, button { width: 100%; padding: 10px; margin-top: 5px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; }
+  button { background-color: #d32f2f; color: white; border: none; cursor: pointer; transition: background 0.3s; font-size: 18px; }
+  button:hover { background-color: #b71c1c; }
+  .hidden { display: none; }
+  .pizza-item { display: flex; align-items: center; justify-content: space-between; background-color: #fff3e0; border: 1px solid #d32f2f; border-radius: 10px; padding: 10px 15px; margin-bottom: 12px; transition: transform 0.2s; }
+  .pizza-item:hover { transform: translateY(-2px); }
+  .pizza-left { display: flex; align-items: flex-start; }
+  .pizza-left-top { display: flex; align-items: flex-start; }
+  .pizza-left-top input[type="checkbox"] { width: 20px; height: 20px; margin-right: 12px; cursor: pointer; margin-top: 4px; }
+  .pizza-info strong { font-size: 18px; color: #d32f2f; }
+  .pizza-info span { font-size: 14px; color: #555; margin-top: 2px; display: block; }
+  .pizza-qty input[type="number"] { width: 60px; font-size: 16px; padding: 5px; }
+  @media (max-width: 500px) {
+    .pizza-item { flex-direction: row; align-items: center; }
+    .pizza-left { flex: 1; }
+    .pizza-qty { margin-left: 10px; }
+  }
 </style>
 </head>
 <body>
@@ -31,111 +37,117 @@
 </header>
 
 <main>
-<form id="pizzaForm" action="https://formspree.io/f/myzpablp" method="POST">
+  <form action="https://formspree.io/f/myzpablp" method="POST" id="pizzaForm">
 
-  <label>Nome:
-    <input type="text" name="nome" id="nome" required>
-  </label>
+    <label>Nome:
+      <input type="text" name="nome" required>
+    </label>
 
-  <label>Telefono:
-    <input type="text" name="telefono" id="telefono" required>
-  </label>
+    <label>Telefono:
+      <input type="text" name="telefono" required>
+    </label>
 
-  <label>Tipo di ordine:
-    <select name="tipo_ordine" id="tipo_ordine" required>
-      <option value="asporto">Asporto</option>
-      <option value="domicilio">Domicilio</option>
-    </select>
-  </label>
-
-  <div id="consegna_extra" class="hidden">
-    <label>Zona di consegna:
-      <select name="zona" id="zona">
-        <option value="marina_di_carrara">Marina di Carrara</option>
-        <option value="carrara">Carrara</option>
-        <option value="marina_di_massa">Marina di Massa</option>
-        <option value="massa">Massa</option>
-        <option value="forte_dei_marmi">Forte dei Marmi</option>
+    <label>Tipo di ordine:
+      <select name="tipo_ordine" id="tipo_ordine" required>
+        <option value="asporto">Asporto</option>
+        <option value="domicilio">Domicilio</option>
       </select>
     </label>
 
-    <label>Indirizzo:
-      <input type="text" name="indirizzo" id="indirizzo">
+    <div id="consegna_extra" class="hidden">
+      <label>Zona di consegna:
+        <select name="zona" id="zona">
+          <option value="marina_di_carrara">Marina di Carrara</option>
+          <option value="carrara">Carrara</option>
+          <option value="marina_di_massa">Marina di Massa</option>
+          <option value="massa">Massa</option>
+          <option value="forte_dei_marmi">Forte dei Marmi</option>
+        </select>
+      </label>
+
+      <label>Indirizzo:
+        <input type="text" name="indirizzo" id="indirizzo">
+      </label>
+    </div>
+
+    <label>Orario:
+      <select name="orario" id="orario">
+        <option value="19:15">19:15</option>
+        <option value="20:00">20:00</option>
+        <option value="21:00">21:00</option>
+      </select>
     </label>
-  </div>
 
-  <label>Orario:
-    <select name="orario" id="orario">
-      <option value="19:15">19:15</option>
-      <option value="20:00">20:00</option>
-      <option value="21:00">21:00</option>
-    </select>
-  </label>
+    <label>Pizze:</label>
 
-  <label>Pizze:</label>
-
-  <div class="pizza-item">
-    <div class="pizza-left">
-      <div class="pizza-left-top">
-        <input type="checkbox" id="margherita" data-pizza="Margherita">
-        <div class="pizza-info">
-          <strong>Margherita</strong>
-          <span>Pomodoro, mozzarella</span>
+    <div class="pizza-item">
+      <div class="pizza-left">
+        <div class="pizza-left-top">
+          <input type="checkbox" id="margherita" name="pizza[]" value="Margherita">
+          <div class="pizza-info">
+            <strong>Margherita</strong>
+            <span>Pomodoro, mozzarella</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="pizza-qty">
-      <input type="number" id="qty_margherita" min="1" value="1" disabled>
-    </div>
-  </div>
-
-  <div class="pizza-item">
-    <div class="pizza-left">
-      <div class="pizza-left-top">
-        <input type="checkbox" id="diavola" data-pizza="Diavola">
-        <div class="pizza-info">
-          <strong>Diavola</strong>
-          <span>Pomodoro, mozzarella, salame piccante</span>
-        </div>
+      <div class="pizza-qty">
+        <input type="number" name="quantità_margherita" min="1" value="1" disabled>
       </div>
     </div>
-    <div class="pizza-qty">
-      <input type="number" id="qty_diavola" min="1" value="1" disabled>
-    </div>
-  </div>
 
-  <div class="pizza-item">
-    <div class="pizza-left">
-      <div class="pizza-left-top">
-        <input type="checkbox" id="capricciosa" data-pizza="Capricciosa">
-        <div class="pizza-info">
-          <strong>Capricciosa</strong>
-          <span>Pomodoro, mozzarella, funghi, prosciutto, carciofi</span>
+    <div class="pizza-item">
+      <div class="pizza-left">
+        <div class="pizza-left-top">
+          <input type="checkbox" id="diavola" name="pizza[]" value="Diavola">
+          <div class="pizza-info">
+            <strong>Diavola</strong>
+            <span>Pomodoro, mozzarella, salame piccante</span>
+          </div>
         </div>
       </div>
+      <div class="pizza-qty">
+        <input type="number" name="quantità_diavola" min="1" value="1" disabled>
+      </div>
     </div>
-    <div class="pizza-qty">
-      <input type="number" id="qty_capricciosa" min="1" value="1" disabled>
+
+    <div class="pizza-item">
+      <div class="pizza-left">
+        <div class="pizza-left-top">
+          <input type="checkbox" id="capricciosa" name="pizza[]" value="Capricciosa">
+          <div class="pizza-info">
+            <strong>Capricciosa</strong>
+            <span>Pomodoro, mozzarella, funghi, prosciutto, carciofi</span>
+          </div>
+        </div>
+      </div>
+      <div class="pizza-qty">
+        <input type="number" name="quantità_capricciosa" min="1" value="1" disabled>
+      </div>
     </div>
-  </div>
 
-  <!-- Campo riepilogo nascosto -->
-  <input type="hidden" name="Riepilogo" id="riepilogo">
+    <label>Note aggiuntive:
+      <textarea name="note" rows="3"></textarea>
+    </label>
 
-  <button type="submit">Invia ordine</button>
-</form>
+    <!-- Campo nascosto per il riepilogo testuale -->
+    <input type="hidden" name="riepilogo" id="riepilogo">
+
+    <input type="hidden" name="_next" value="grazie.html">
+
+    <button type="submit">Invia ordine</button>
+  </form>
 </main>
 
 <script>
 const tipoOrdine = document.getElementById("tipo_ordine");
 const consegnaExtra = document.getElementById("consegna_extra");
-const indirizzo = document.getElementById("indirizzo");
 const zona = document.getElementById("zona");
 const orario = document.getElementById("orario");
+const indirizzo = document.querySelector('input[name="indirizzo"]');
+const form = document.getElementById("pizzaForm");
 
-// Mostra/nascondi consegna
 tipoOrdine.addEventListener("change", () => {
-  if(tipoOrdine.value === "domicilio") {
+  if (tipoOrdine.value === "domicilio") {
     consegnaExtra.classList.remove("hidden");
     indirizzo.setAttribute("required", "required");
     aggiornaOrari();
@@ -150,16 +162,18 @@ zona.addEventListener("change", aggiornaOrari);
 
 function aggiornaOrari() {
   orario.innerHTML = "";
-  if(zona.value === "forte_dei_marmi") {
-    ["19:15","20:00","21:00"].forEach(h=>{
+  if (zona.value === "forte_dei_marmi") {
+    ["19:15", "20:00", "21:00"].forEach(h => {
       let opt = document.createElement("option");
-      opt.value = h; opt.textContent = h;
+      opt.value = h;
+      opt.textContent = h;
       orario.appendChild(opt);
     });
   } else {
-    ["19:15","21:00"].forEach(h=>{
+    ["19:15", "21:00"].forEach(h => {
       let opt = document.createElement("option");
-      opt.value = h; opt.textContent = h;
+      opt.value = h;
+      opt.textContent = h;
       orario.appendChild(opt);
     });
   }
@@ -167,46 +181,45 @@ function aggiornaOrari() {
 
 function resetOrariAsporto() {
   orario.innerHTML = "";
-  ["19:15","20:00","21:00"].forEach(h=>{
+  ["19:15", "20:00", "21:00"].forEach(h => {
     let opt = document.createElement("option");
-    opt.value = h; opt.textContent = h;
+    opt.value = h;
+    opt.textContent = h;
     orario.appendChild(opt);
   });
 }
 
-// Attiva/disattiva quantità
-document.querySelectorAll('.pizza-item input[type="checkbox"]').forEach(chk=>{
-  chk.addEventListener('change', function(){
+// Abilita/disabilita quantità pizze
+document.querySelectorAll('.pizza-item input[type="checkbox"]').forEach(chk => {
+  chk.addEventListener('change', function() {
     const qty = this.closest('.pizza-item').querySelector('input[type="number"]');
     qty.disabled = !this.checked;
   });
 });
 
-// Genera riepilogo in tabella HTML
-document.getElementById('pizzaForm').addEventListener('submit', function(e){
-  let summary = `<h3>Ordine Pizza</h3>
-<p><strong>Nome:</strong> ${document.getElementById('nome').value}</p>
-<p><strong>Telefono:</strong> ${document.getElementById('telefono').value}</p>`;
+// Genera il riepilogo testuale prima dell'invio
+form.addEventListener('submit', function(e) {
+  const nome = form.querySelector('input[name="nome"]').value;
+  const telefono = form.querySelector('input[name="telefono"]').value;
+  const indirizzoVal = form.querySelector('input[name="indirizzo"]') ? form.querySelector('input[name="indirizzo"]').value : '';
+  const orarioVal = form.querySelector('select[name="orario"]').value;
+  const pizze = [];
 
-  if(tipoOrdine.value === "domicilio") {
-    summary += `<p><strong>Indirizzo:</strong> ${document.getElementById('indirizzo').value}</p>`;
-  }
-
-  summary += `<p><strong>Orario:</strong> ${document.getElementById('orario').value}</p>`;
-
-  summary += `<table border="1" cellpadding="5" cellspacing="0">
-<tr><th>Pizza</th><th>Quantità</th></tr>`;
-
-  document.querySelectorAll('.pizza-item').forEach(item=>{
-    const checkbox = item.querySelector('input[type="checkbox"]');
+  document.querySelectorAll('.pizza-item').forEach(item => {
+    const chk = item.querySelector('input[type="checkbox"]');
     const qty = item.querySelector('input[type="number"]');
-    if(checkbox.checked) {
-      summary += `<tr><td>${checkbox.dataset.pizza}</td><td>${qty.value}</td></tr>`;
+    if (chk.checked) {
+      pizze.push(`${chk.value} x${qty.value}`);
     }
   });
-  summary += `</table>`;
 
-  document.getElementById('riepilogo').value = summary;
+  let riepilogo = `Ordine Pizza\nNome: ${nome}\nTelefono: ${telefono}\n`;
+  if (tipoOrdine.value === "domicilio") {
+    riepilogo += `Indirizzo: ${indirizzoVal}\n`;
+  }
+  riepilogo += `Orario: ${orarioVal}\n\nPizze:\n${pizze.join('\n')}`;
+
+  form.querySelector('#riepilogo').value = riepilogo;
 });
 </script>
 
