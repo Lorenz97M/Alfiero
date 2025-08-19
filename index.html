@@ -157,7 +157,7 @@
       </label>
     
       <label>Indirizzo:
-        <input type="text" name="indirizzo" required>
+        <input type="text" name="indirizzo">
       </label>
     </div>
 
@@ -231,13 +231,16 @@
   const consegnaExtra = document.getElementById("consegna_extra");
   const zona = document.getElementById("zona");
   const orario = document.getElementById("orario");
+  const indirizzo = document.querySelector('input[name="indirizzo"]');
 
   tipoOrdine.addEventListener("change", () => {
     if (tipoOrdine.value === "domicilio") {
       consegnaExtra.classList.remove("hidden");
+      indirizzo.setAttribute("required", "required"); // obbligatorio
       aggiornaOrari();
     } else {
       consegnaExtra.classList.add("hidden");
+      indirizzo.removeAttribute("required"); // non obbligatorio
       resetOrariAsporto();
     }
   });
@@ -283,7 +286,3 @@
 
 </body>
 </html>
-
-
-
-
