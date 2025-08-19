@@ -232,15 +232,18 @@
 <script>
   const tipoOrdine = document.getElementById("tipo_ordine");
   const consegnaExtra = document.getElementById("consegna_extra");
+  const indirizzoExtra = document.getElementById("indirizzo_extra")
   const zona = document.getElementById("zona");
   const orario = document.getElementById("orario");
 
   tipoOrdine.addEventListener("change", () => {
     if (tipoOrdine.value === "domicilio") {
       consegnaExtra.classList.remove("hidden");
+      indirizzoExtra.classlist.remove("hidden");
       aggiornaOrari();
     } else {
       consegnaExtra.classList.add("hidden");
+      indirizzoExtra.classlist.add("hidden");
       resetOrariAsporto();
     }
   });
@@ -286,4 +289,5 @@
 
 </body>
 </html>
+
 
