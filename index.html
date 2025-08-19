@@ -18,16 +18,15 @@
       color: white;
       text-align: center;
       padding: 20px 10px;
-      position: relative;
     }
-
-    header img.stemma {
-      margin: 0;
-      font-size: 2rem;
+    header .stemma {
+      width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid #fff;
+      vertical-align: middle; margin-right: 10px;
     }
+    header h1 { margin: 0; font-size: 1.8rem; font-weight: 600; }
 
     main {
-      max-width: 600px;
+      max-width: 640px;
       margin: 30px auto;
       padding: 0 20px;
     }
@@ -39,96 +38,62 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    label { display: block; margin-top: 15px; font-family: 'Garamond', serif; }
+    label { display: block; margin-top: 15px; }
     input, select, textarea, button { 
       width: 100%; 
       padding: 10px; 
       margin-top: 5px; 
       font-size: 16px; 
-      border-radius: 5px; 
+      border-radius: 8px; 
       border: 1px solid #ccc; 
       box-sizing: border-box; 
       font-family: 'Garamond', serif;
     }
-    button { background-color: #d32f2f; color: white; border: none; cursor: pointer; transition: background 0.3s; font-size: 18px; }
+    button { background-color: #d32f2f; color: white; border: none; cursor: pointer; transition: background 0.25s; font-size: 18px; }
     button:hover { background-color: #b71c1c; }
 
-    .hidden { display: none; }
+    .hidden { display: none !important; }
 
-    /* Stile pizza */
+    /* Pizze: tutto dentro al riquadro */
     .pizza-item {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      background-color: #fff3e0;
+      gap: 12px;
+      background-color: #fffaf2;
       border: 1px solid #d32f2f;
-      border-radius: 10px;
-      padding: 10px 15px;
+      border-radius: 12px;
+      padding: 12px;
       margin-bottom: 12px;
-      transition: transform 0.2s;
-      font-family: 'Garamond', serif;
+      word-wrap: break-word;
     }
-    .pizza-item:hover { transform: translateY(-2px); }
-
-    .pizza-left {
-      display: flex;
-      flex-direction: column;
+    .pizza-item input[type="checkbox"] {
+      width: 20px; height: 20px; flex-shrink: 0; cursor: pointer;
     }
-
-    .pizza-left-top {
-      display: flex;
-      align-items: center;
-    }
-
-    .pizza-left-top input[type="checkbox"] {
-      width: 20px;
-      height: 20px;
-      margin-right: 12px;
-      cursor: pointer;
-    }
-
-    .pizza-info strong {
-      font-size: 18px;
-      color: #d32f2f;
-    }
-
-    .pizza-info span {
-      font-size: 14px;
-      color: #555;
-      margin-top: 2px;
-      display: block;
-    }
-
-    .pizza-qty input[type="number"] {
-      width: 60px;
-      font-size: 16px;
-      padding: 5px;
-    }
+    .pizza-info { flex: 1; min-width: 0; }
+    .pizza-info strong { font-size: 18px; color: #d32f2f; display: block; }
+    .pizza-info span { font-size: 14px; color: #555; display: block; margin-top: 2px; }
+    .pizza-qty { width: 64px; flex-shrink: 0; text-align: right; }
+    .pizza-qty input[type="number"] { width: 64px; text-align: center; }
 
     /* Responsive */
-    @media (max-width: 500px) {
-      .pizza-item {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .pizza-qty {
-        margin-top: 10px;
-        width: 100%;
-      }
-      .pizza-qty input[type="number"] {
-        width: 100%;
-      }
+    @media (max-width: 520px) {
+      .pizza-item { align-items: flex-start; }
+      .pizza-qty { width: 100%; }
+      .pizza-qty input[type="number"] { width: 100%; margin-top: 6px; }
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1><img src="stemmaAlfiero.png" alt="Stemma Pizzeria Alfiero" class="stemma"></h1>
+  <h1>
+    <img src="stemmaAlfiero.png" alt="Stemma Pizzeria Alfiero" class="stemma">
+    Pizzeria Alfiero
+  </h1>
 </header>
 
 <main>
-  <form action="https://formspree.io/f/myzpablp" method="POST">
+  <form action="https://formspree.io/f/myzpablp" method="POST" id="ordineForm">
 
     <label>Nome:
       <input type="text" name="nome" required>
@@ -145,21 +110,21 @@
       </select>
     </label>
 
-   <div id="consegna_extra" class="hidden">
-  <label>Zona di consegna:
-    <select name="zona" id="zona">
-      <option value="marina_di_carrara">Marina di Carrara</option>
-      <option value="carrara">Carrara</option>
-      <option value="marina_di_massa">Marina di Massa</option>
-      <option value="massa">Massa</option>
-      <option value="forte_dei_marmi">Forte dei Marmi</option>
-    </select>
-  </label>
+    <div id="consegna_extra" class="hidden">
+      <label>Zona di consegna:
+        <select name="zona" id="zona">
+          <option value="marina_di_carrara">Marina di Carrara</option>
+          <option value="carrara">Carrara</option>
+          <option value="marina_di_massa">Marina di Massa</option>
+          <option value="massa">Massa</option>
+          <option value="forte_dei_marmi">Forte dei Marmi</option>
+        </select>
+      </label>
 
-  <label>Indirizzo:
-    <input type="text" name="indirizzo" id="indirizzo">
-  </label>
-</div>
+      <label>Indirizzo:
+        <input type="text" name="indirizzo" id="indirizzo">
+      </label>
+    </div>
 
     <label>Orario:
       <select name="orario" id="orario">
@@ -172,14 +137,10 @@
     <label>Pizze:</label>
 
     <div class="pizza-item">
-      <div class="pizza-left">
-        <div class="pizza-left-top">
-          <input type="checkbox" id="margherita" name="pizza[]" value="Margherita">
-          <div class="pizza-info">
-            <strong>Margherita</strong>
-            <span>Pomodoro, mozzarella</span>
-          </div>
-        </div>
+      <input type="checkbox" id="margherita" name="pizza[]" value="Margherita">
+      <div class="pizza-info">
+        <strong>Margherita</strong>
+        <span>Pomodoro, mozzarella</span>
       </div>
       <div class="pizza-qty">
         <input type="number" name="quantità_margherita" min="1" value="1" disabled>
@@ -187,14 +148,10 @@
     </div>
 
     <div class="pizza-item">
-      <div class="pizza-left">
-        <div class="pizza-left-top">
-          <input type="checkbox" id="diavola" name="pizza[]" value="Diavola">
-          <div class="pizza-info">
-            <strong>Diavola</strong>
-            <span>Pomodoro, mozzarella, salame piccante</span>
-          </div>
-        </div>
+      <input type="checkbox" id="diavola" name="pizza[]" value="Diavola">
+      <div class="pizza-info">
+        <strong>Diavola</strong>
+        <span>Pomodoro, mozzarella, salame piccante</span>
       </div>
       <div class="pizza-qty">
         <input type="number" name="quantità_diavola" min="1" value="1" disabled>
@@ -202,14 +159,10 @@
     </div>
 
     <div class="pizza-item">
-      <div class="pizza-left">
-        <div class="pizza-left-top">
-          <input type="checkbox" id="capricciosa" name="pizza[]" value="Capricciosa">
-          <div class="pizza-info">
-            <strong>Capricciosa</strong>
-            <span>Pomodoro, mozzarella, funghi, prosciutto, carciofi</span>
-          </div>
-        </div>
+      <input type="checkbox" id="capricciosa" name="pizza[]" value="Capricciosa">
+      <div class="pizza-info">
+        <strong>Capricciosa</strong>
+        <span>Pomodoro, mozzarella, funghi, prosciutto, carciofi</span>
       </div>
       <div class="pizza-qty">
         <input type="number" name="quantità_capricciosa" min="1" value="1" disabled>
@@ -231,59 +184,65 @@
   const consegnaExtra = document.getElementById("consegna_extra");
   const zona = document.getElementById("zona");
   const orario = document.getElementById("orario");
-  const indirizzo = document.querySelector('input[name="indirizzo"]');
+  const indirizzo = document.getElementById("indirizzo");
 
-  tipoOrdine.addEventListener("change", () => {
-    if (tipoOrdine.value === "domicilio") {
-      consegnaExtra.classList.remove("hidden");
-      indirizzo.setAttribute("required", "required"); // obbligatorio
+  // Sincronizza stato dei campi di consegna (visibilità + required + disabled)
+  function syncConsegnaFields() {
+    const isDelivery = tipoOrdine.value === "domicilio";
+
+    // visibilità blocco
+    consegnaExtra.classList.toggle("hidden", !isDelivery);
+
+    // abilitazione/validazione
+    zona.disabled = !isDelivery;
+    indirizzo.disabled = !isDelivery;
+    indirizzo.required = isDelivery;
+
+    // orari
+    if (isDelivery) {
       aggiornaOrari();
     } else {
-      consegnaExtra.classList.add("hidden");
-      indirizzo.removeAttribute("required"); // non obbligatorio
       resetOrariAsporto();
     }
-  });
+  }
 
+  tipoOrdine.addEventListener("change", syncConsegnaFields);
+
+  // Orari dinamici in base alla zona
   zona.addEventListener("change", aggiornaOrari);
 
   function aggiornaOrari() {
     orario.innerHTML = "";
-    if (zona.value === "forte_dei_marmi") {
-      ["19:15", "20:00", "21:00"].forEach(h => {
-        let opt = document.createElement("option");
-        opt.value = h;
-        opt.textContent = h;
-        orario.appendChild(opt);
-      });
-    } else {
-      ["19:15", "21:00"].forEach(h => {
-        let opt = document.createElement("option");
-        opt.value = h;
-        opt.textContent = h;
-        orario.appendChild(opt);
-      });
+    const slots = (zona.value === "forte_dei_marmi") 
+      ? ["19:15", "20:00", "21:00"]
+      : ["19:15", "21:00"];
+    for (const h of slots) {
+      const opt = document.createElement("option");
+      opt.value = h; opt.textContent = h;
+      orario.appendChild(opt);
     }
   }
 
   function resetOrariAsporto() {
     orario.innerHTML = "";
-    ["19:15", "20:00", "21:00"].forEach(h => {
-      let opt = document.createElement("option");
-      opt.value = h;
-      opt.textContent = h;
+    for (const h of ["19:15", "20:00", "21:00"]) {
+      const opt = document.createElement("option");
+      opt.value = h; opt.textContent = h;
       orario.appendChild(opt);
-    });
+    }
   }
 
+  // Abilita/disabilita quantità in base alla checkbox
   document.querySelectorAll('.pizza-item input[type="checkbox"]').forEach(chk => {
     chk.addEventListener('change', function() {
       const qty = this.closest('.pizza-item').querySelector('input[type="number"]');
       qty.disabled = !this.checked;
     });
   });
+
+  // Esegui sincronizzazione all'avvio (copre anche i refresh/ritorni pagina)
+  document.addEventListener('DOMContentLoaded', syncConsegnaFields);
 </script>
 
 </body>
 </html>
-
