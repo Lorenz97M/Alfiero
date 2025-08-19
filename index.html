@@ -12,25 +12,30 @@
       background-color: #fff3e0; 
       color: #333; 
     }
+
     header {
       background-color: #d32f2f;
       text-align: center;
       padding: 20px 10px;
     }
+
     header img.stemma {
       max-width: 120px;
     }
+
     main {
       max-width: 600px;
       margin: 30px auto;
       padding: 0 20px;
     }
+
     form {
       background-color: #fff;
       padding: 20px;
       border-radius: 15px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
+
     label { display: block; margin-top: 15px; font-family: 'Garamond', serif; }
     input, select, textarea, button { 
       width: 100%; 
@@ -44,8 +49,10 @@
     }
     button { background-color: #d32f2f; color: white; border: none; cursor: pointer; transition: background 0.3s; font-size: 18px; }
     button:hover { background-color: #b71c1c; }
+
     .hidden { display: none; }
 
+    /* Stile pizza */
     .pizza-item {
       display: flex;
       align-items: center;
@@ -59,16 +66,55 @@
       font-family: 'Garamond', serif;
     }
     .pizza-item:hover { transform: translateY(-2px); }
-    .pizza-left { display: flex; align-items: flex-start; }
-    .pizza-left-top { display: flex; align-items: flex-start; }
-    .pizza-left-top input[type="checkbox"] { width: 20px; height: 20px; margin-right: 12px; cursor: pointer; margin-top: 4px; }
-    .pizza-info strong { font-size: 18px; color: #d32f2f; }
-    .pizza-info span { font-size: 14px; color: #555; margin-top: 2px; display: block; }
-    .pizza-qty input[type="number"] { width: 60px; font-size: 16px; padding: 5px; }
+
+    .pizza-left {
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .pizza-left-top {
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .pizza-left-top input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-right: 12px;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+
+    .pizza-info strong {
+      font-size: 18px;
+      color: #d32f2f;
+    }
+
+    .pizza-info span {
+      font-size: 14px;
+      color: #555;
+      margin-top: 2px;
+      display: block;
+    }
+
+    .pizza-qty input[type="number"] {
+      width: 60px;
+      font-size: 16px;
+      padding: 5px;
+    }
+
+    /* Responsive */
     @media (max-width: 500px) {
-      .pizza-item { flex-direction: row; align-items: center; }
-      .pizza-left { flex: 1; }
-      .pizza-qty { margin-left: 10px; }
+      .pizza-item {
+        flex-direction: row;
+        align-items: center;
+      }
+      .pizza-left {
+        flex: 1;
+      }
+      .pizza-qty {
+        margin-left: 10px;
+      }
     }
   </style>
 </head>
@@ -181,8 +227,9 @@ const tipoOrdine = document.getElementById("tipo_ordine");
 const consegnaExtra = document.getElementById("consegna_extra");
 const zona = document.getElementById("zona");
 const orario = document.getElementById("orario");
-const indirizzo = document.querySelector('input[name="indirizzo"]');
+const indirizzo = document.getElementById("indirizzo");
 
+// Mostra/nasconde dati consegna
 tipoOrdine.addEventListener("change", () => {
   if (tipoOrdine.value === "domicilio") {
     consegnaExtra.classList.remove("hidden");
@@ -226,16 +273,16 @@ function resetOrariAsporto() {
   });
 }
 
-// Abilita/disabilita quantità se la pizza è selezionata
-document.querySelectorAll('.pizza-item input[type="checkbox"]').forEach(checkbox => {
-  checkbox.addEventListener('change', (e) => {
-    const qtyInput = e.target.closest('.pizza-item').querySelector('input[type="number"]');
-    qtyInput.disabled = !e.target.checked;
-    if (!e.target.checked) qtyInput.value = 1;
+// Gestione abilitazione quantità
+document.querySelectorAll('.pizza-item input[type="checkbox"]').forEach(cb => {
+  cb.addEventListener('change', e => {
+    const qtyInput = cb.closest('.pizza-item').querySelector('input[type="number"]');
+    qtyInput.disabled = !cb.checked;
+    if (!cb.checked) qtyInput.value = 1;
   });
 });
 
-// Invio Form con fetch e Formspree
+// Invio form via fetch con redirect corretto
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
   const submitBtn = form.querySelector("button[type='submit']");
@@ -255,17 +302,22 @@ form.addEventListener("submit", async (e) => {
     indirizzo: indirizzo.value,
     orario: orario.value,
     pizze: pizzeSelezionate.join(", "),
-    note: form.note.value,
-    _next: 'grazie.html'
+    note: form.note.value
   });
 
   try {
-    await fetch("https://formspree.io/f/myzpablp", {
+    const response = await fetch("https://formspree.io/f/myzpablp", {
       method: "POST",
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: formData
     });
-    // Redirect automatico tramite _next di Formspree
+
+    if (response.ok) {
+      window.location.href = "grazie.html"; // redirect manuale
+    } else {
+      alert("Errore nell'invio, riprova!");
+      submitBtn.disabled = false;
+    }
   } catch (err) {
     alert("Errore nell'invio, riprova!");
     submitBtn.disabled = false;
