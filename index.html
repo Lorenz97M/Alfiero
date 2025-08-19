@@ -222,107 +222,102 @@
 </main>
 
 <script>
-const form = document.getElementById("pizzaForm");
-const tipoOrdine = document.getElementById("tipo_ordine");
-const consegnaExtra = document.getElementById("consegna_extra");
-const zona = document.getElementById("zona");
-const orario = document.getElementById("orario");
-const indirizzo = document.getElementById("indirizzo");
+  const form = document.getElementById("pizzaForm");
+  const tipoOrdine = document.getElementById("tipo_ordine");
+  const consegnaExtra = document.getElementById("consegna_extra");
+  const zona = document.getElementById("zona");
+  const orario = document.getElementById("orario");
+  const indirizzo = document.querySelector('input[name="indirizzo"]');
 
-// Mostra/nasconde dati consegna
-tipoOrdine.addEventListener("change", () => {
-  if (tipoOrdine.value === "domicilio") {
-    consegnaExtra.classList.remove("hidden");
-    indirizzo.setAttribute("required", "required");
-    aggiornaOrari();
-  } else {
-    consegnaExtra.classList.add("hidden");
-    indirizzo.removeAttribute("required");
-    resetOrariAsporto();
+  tipoOrdine.addEventListener("change", () => {
+    if (tipoOrdine.value === "domicilio") {
+      consegnaExtra.classList.remove("hidden");
+      indirizzo.setAttribute("required", "required");
+      aggiornaOrari();
+    } else {
+      consegnaExtra.classList.add("hidden");
+      indirizzo.removeAttribute("required");
+      resetOrariAsporto();
+    }
+  });
+
+  zona.addEventListener("change", aggiornaOrari);
+
+  function aggiornaOrari() {
+    orario.innerHTML = "";
+    if (zona.value === "forte_dei_marmi") {
+      ["19:15", "20:00", "21:00"].forEach(h => {
+        let opt = document.createElement("option");
+        opt.value = h;
+        opt.textContent = h;
+        orario.appendChild(opt);
+      });
+    } else {
+      ["19:15", "21:00"].forEach(h => {
+        let opt = document.createElement("option");
+        opt.value = h;
+        opt.textContent = h;
+        orario.appendChild(opt);
+      });
+    }
   }
-});
 
-zona.addEventListener("change", aggiornaOrari);
-
-function aggiornaOrari() {
-  orario.innerHTML = "";
-  if (zona.value === "forte_dei_marmi") {
+  function resetOrariAsporto() {
+    orario.innerHTML = "";
     ["19:15", "20:00", "21:00"].forEach(h => {
       let opt = document.createElement("option");
       opt.value = h;
       opt.textContent = h;
       orario.appendChild(opt);
     });
-  } else {
-    ["19:15", "21:00"].forEach(h => {
-      let opt = document.createElement("option");
-      opt.value = h;
-      opt.textContent = h;
-      orario.appendChild(opt);
-    });
   }
-}
 
-function resetOrariAsporto() {
-  orario.innerHTML = "";
-  ["19:15", "20:00", "21:00"].forEach(h => {
-    let opt = document.createElement("option");
-    opt.value = h;
-    opt.textContent = h;
-    orario.appendChild(opt);
-  });
-}
-
-// Gestione abilitazione quantità
-document.querySelectorAll('.pizza-item input[type="checkbox"]').forEach(cb => {
-  cb.addEventListener('change', e => {
-    const qtyInput = cb.closest('.pizza-item').querySelector('input[type="number"]');
-    qtyInput.disabled = !cb.checked;
-    if (!cb.checked) qtyInput.value = 1;
-  });
-});
-
-// Invio form via fetch con redirect corretto
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const submitBtn = form.querySelector("button[type='submit']");
-  submitBtn.disabled = true;
-
-  let pizzeSelezionate = [];
-  document.querySelectorAll('.pizza-item input[type="checkbox"]:checked').forEach(cb => {
-    const qty = cb.closest('.pizza-item').querySelector('input[type="number"]').value;
-    pizzeSelezionate.push(`${cb.value} x${qty}`);
+  // Abilita/disabilita quantità se la pizza è selezionata
+  document.querySelectorAll('input[type="checkbox"][name="pizza[]"]').forEach(chk => {
+    chk.addEventListener("change", function() {
+      const qtyInput = document.querySelector(`input[name="quantità_${chk.value.toLowerCase()}"]`);
+      qtyInput.disabled = !chk.checked;
+    });
   });
 
-  const formData = new URLSearchParams({
-    nome: form.nome.value,
-    telefono: form.telefono.value,
-    tipo_ordine: form.tipo_ordine.value,
-    zona: zona.value,
-    indirizzo: indirizzo.value,
-    orario: orario.value,
-    pizze: pizzeSelezionate.join(", "),
-    note: form.note.value
-  });
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
 
-  try {
-    const response = await fetch("https://formspree.io/f/myzpablp", {
+    const submitBtn = form.querySelector("button[type='submit']");
+    submitBtn.disabled = true;
+
+    const data = new FormData(form);
+    let testo = "Ordine Pizza\n";
+    testo += `Nome: ${data.get("nome")}\n`;
+    testo += `Telefono: ${data.get("telefono")}\n`;
+    if (data.get("tipo_ordine") === "domicilio") {
+      testo += `Indirizzo: ${data.get("indirizzo")}\n`;
+    }
+    testo += `Orario: ${data.get("orario")}\n\n`;
+    testo += "Pizze:\n";
+
+    const pizzeDisponibili = ["Margherita", "Diavola", "Capricciosa"];
+    pizzeDisponibili.forEach(pizza => {
+      if (data.getAll("pizza[]").includes(pizza)) {
+        const nomePizza = pizza.padEnd(15, ' ');
+        testo += `${nomePizza} x${data.get("quantità_" + pizza.toLowerCase())}\n`;
+      }
+    });
+
+    const note = data.get("note");
+    if (note) testo += `\nNote aggiuntive:\n${note}\n`;
+
+    fetch("https://formspree.io/f/myzpablp", {
       method: "POST",
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: formData
-    });
-
-    if (response.ok) {
-      window.location.href = "grazie.html"; // redirect manuale
-    } else {
+      body: new URLSearchParams({ message: testo })
+    }).then(() => {
+      window.location.href = "grazie.html";
+    }).catch(() => {
       alert("Errore nell'invio, riprova!");
       submitBtn.disabled = false;
-    }
-  } catch (err) {
-    alert("Errore nell'invio, riprova!");
-    submitBtn.disabled = false;
-  }
-});
+    });
+  });
 </script>
 
 </body>
