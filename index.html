@@ -9,25 +9,19 @@
   header { background-color: #d32f2f; text-align: center; padding: 20px 10px; }
   header img.stemma { max-width: 120px; }
   main { max-width: 600px; margin: 30px auto; padding: 0 20px; }
-  form { background-color: #fff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+  form { background-color: #fff; padding: 20px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); font-family: 'Garamond', serif; }
   label { display: block; margin-top: 15px; }
-  input, select, textarea, button { width: 100%; padding: 10px; margin-top: 5px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; }
+  input, select, textarea, button { width: 100%; padding: 10px; margin-top: 5px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; font-family: 'Garamond', serif; }
   button { background-color: #d32f2f; color: white; border: none; cursor: pointer; transition: background 0.3s; font-size: 18px; }
   button:hover { background-color: #b71c1c; }
   .hidden { display: none; }
-  .pizza-item { display: flex; align-items: center; justify-content: space-between; background-color: #fff3e0; border: 1px solid #d32f2f; border-radius: 10px; padding: 10px 15px; margin-bottom: 12px; transition: transform 0.2s; }
-  .pizza-item:hover { transform: translateY(-2px); }
+  .pizza-item { display: flex; align-items: center; justify-content: space-between; background-color: #fff3e0; border: 1px solid #d32f2f; border-radius: 10px; padding: 10px 15px; margin-bottom: 12px; }
   .pizza-left { display: flex; align-items: flex-start; }
   .pizza-left-top { display: flex; align-items: flex-start; }
   .pizza-left-top input[type="checkbox"] { width: 20px; height: 20px; margin-right: 12px; cursor: pointer; margin-top: 4px; }
   .pizza-info strong { font-size: 18px; color: #d32f2f; }
   .pizza-info span { font-size: 14px; color: #555; margin-top: 2px; display: block; }
   .pizza-qty input[type="number"] { width: 60px; font-size: 16px; padding: 5px; }
-  @media (max-width: 500px) {
-    .pizza-item { flex-direction: row; align-items: center; }
-    .pizza-left { flex: 1; }
-    .pizza-qty { margin-left: 10px; }
-  }
 </style>
 </head>
 <body>
@@ -129,9 +123,7 @@
       <textarea name="note" rows="3"></textarea>
     </label>
 
-    <!-- Campo nascosto per il riepilogo testuale -->
     <input type="hidden" name="riepilogo" id="riepilogo">
-
     <input type="hidden" name="_next" value="grazie.html">
 
     <button type="submit">Invia ordine</button>
@@ -197,27 +189,30 @@ document.querySelectorAll('.pizza-item input[type="checkbox"]').forEach(chk => {
   });
 });
 
-// Genera il riepilogo testuale prima dell'invio
+// Genera riepilogo testuale prima dell'invio
 form.addEventListener('submit', function(e) {
   const nome = form.querySelector('input[name="nome"]').value;
   const telefono = form.querySelector('input[name="telefono"]').value;
   const indirizzoVal = form.querySelector('input[name="indirizzo"]') ? form.querySelector('input[name="indirizzo"]').value : '';
   const orarioVal = form.querySelector('select[name="orario"]').value;
+  const note = form.querySelector('textarea[name="note"]').value;
+  
   const pizze = [];
-
   document.querySelectorAll('.pizza-item').forEach(item => {
     const chk = item.querySelector('input[type="checkbox"]');
     const qty = item.querySelector('input[type="number"]');
     if (chk.checked) {
-      pizze.push(`${chk.value} x${qty.value}`);
+      pizze.push(`${chk.value.padEnd(15)} x${qty.value}`);
     }
   });
 
-  let riepilogo = `Ordine Pizza\nNome: ${nome}\nTelefono: ${telefono}\n`;
-  if (tipoOrdine.value === "domicilio") {
-    riepilogo += `Indirizzo: ${indirizzoVal}\n`;
-  }
-  riepilogo += `Orario: ${orarioVal}\n\nPizze:\n${pizze.join('\n')}`;
+  let riepilogo = `Ordine Pizza\n`;
+  riepilogo += `Nome: ${nome}\n`;
+  riepilogo += `Telefono: ${telefono}\n`;
+  if (tipoOrdine.value === "domicilio") riepilogo += `Indirizzo: ${indirizzoVal}\n`;
+  riepilogo += `Orario: ${orarioVal}\n\n`;
+  riepilogo += `Pizze:\n${pizze.join('\n')}\n\n`;
+  if (note.trim() !== '') riepilogo += `Note:\n${note}\n`;
 
   form.querySelector('#riepilogo').value = riepilogo;
 });
