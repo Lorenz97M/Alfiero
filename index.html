@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body { 
-      font-family: 'Garamond', serif; 
+      font-family: 'Sans-Serif', serif; 
       margin: 0; 
       padding: 0; 
       background-color: #fff3e0; 
@@ -135,8 +135,7 @@
 <body>
 
 <header>
-  <img src="stemmaAlfiero.png" alt="Stemma Pizzeria Alfiero" class="stemma">
-  <h1>Pizzeria Alfiero 🍕</h1>
+  <h1><img src="stemmaAlfiero.png" alt="Stemma Pizzeria Alfiero" class="stemma"></h1>
 </header>
 
 <main>
@@ -254,7 +253,7 @@
       aggiornaOrari();
     } else {
       consegnaExtra.classList.add("hidden");
-      indirizzoExtra.classList.remove("hidden");
+      indirizzoExtra.classList.add("hidden");
       resetOrariAsporto();
     }
   });
