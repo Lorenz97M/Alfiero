@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grazie per il tuo ordine 🍕</title>
+  <style>
+    body {
+      font-family: 'Garamond', serif;
+      background-color: #fff3e0;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #333;
+      text-align: center;
+    }
+
+    .container {
+      background-color: #ffffff;
+      padding: 40px 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      max-width: 500px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h1 {
+      color: #d32f2f;
+      margin-bottom: 20px;
+      font-size: 32px;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    img.stemma {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    button {
+      margin-top: 25px;
+      padding: 12px 25px;
+      font-size: 16px;
+      background-color: #d32f2f;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-family: 'Garamond', serif;
+    }
+
+    button:hover {
+      background-color: #b71c1c;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="stemmaAlfiero.png" alt="Stemma Pizzeria Alfiero" class="stemma">
+    <h1>Grazie per il tuo ordine!</h1>
+    <p>La Pizzeria Alfiero ti ringrazia per l'ordine.<br>
+       Presto potrai gustare la tua pizza! 🍕</p>
+    <button onclick="window.location.href='index.html'">Torna alla pagina principale</button>
+  </div>
+</body>
+</html>
