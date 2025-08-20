@@ -217,6 +217,9 @@
       <textarea name="note" rows="3"></textarea>
     </label>
 
+    <!-- Campo nascosto per il riepilogo -->
+    <input type="hidden" name="message" id="message">
+
     <button type="submit">Invia ordine</button>
   </form>
 </main>
@@ -278,16 +281,54 @@
     });
   });
 
-  // 👇 nuovo script per gestire redirect manuale dopo invio
+  // 👇 script per invio + email riassuntiva
   const form = document.getElementById('ordine');
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
+
+    // recupero valori
+    const nome = form.querySelector('input[name="nome"]').value;
+    const telefono = form.querySelector('input[name="telefono"]').value;
+    const indirizzoVal = form.querySelector('input[name="indirizzo"]')?.value || "—";
+    const orarioVal = form.querySelector('select[name="orario"]').value;
+    const note = form.querySelector('textarea[name="note"]').value;
+
+    // Pizze scelte
+    let pizze = [];
+    form.querySelectorAll('.pizza-item').forEach(item => {
+      const chk = item.querySelector('input[type="checkbox"]');
+      const qty = item.querySelector('input[type="number"]');
+      if (chk.checked) {
+        pizze.push(`${chk.value} x${qty.value}`);
+      }
+    });
+
+    // testo riassuntivo
+    const riassunto = `
+Ordine Pizza
+Nome: ${nome}
+Telefono: ${telefono}
+Indirizzo: ${indirizzoVal}
+Orario: ${orarioVal}
+
+Pizze:
+${pizze.join("\n")}
+
+Note aggiuntive:
+${note}
+    `;
+
+    document.getElementById('message').value = riassunto;
+
+    // invio a Formspree
     const formData = new FormData(form);
     await fetch(form.action, {
       method: form.method,
       body: formData,
       headers: { 'Accept': 'application/json' }
     });
+
+    // redirect
     window.location.href = "grazie.html";
   });
 </script>
