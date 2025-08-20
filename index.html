@@ -248,6 +248,7 @@
     // recupero valori
     const nome = document.getElementById('nome').value;
     const telefono = document.getElementById('telefono').value;
+    const zonaVal = document.getElementById('zona')?.value || "—";
     const indirizzoVal = document.getElementById('indirizzo')?.value || "—";
     const orarioVal = document.getElementById('orario').value;
     const note = document.getElementById('note').value;
@@ -266,6 +267,7 @@
     const riassunto = `Ordine Pizza
 Nome: ${nome}
 Telefono: ${telefono}
+Zona: ${zonaVal}
 Indirizzo: ${indirizzoVal}
 Orario: ${orarioVal}
 
@@ -295,3 +297,4 @@ ${note}`;
 
 </body>
 </html>
+
