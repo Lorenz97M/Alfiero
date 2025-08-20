@@ -127,98 +127,99 @@
 <main>
   <form id="ordine" action="https://formspree.io/f/myzpablp" method="POST">
 
-    <label>Nome:
-      <input type="text" name="nome" required>
-    </label>
+<label>Nome:
+  <input type="text" id="nome" required>
+</label>
 
-    <label>Telefono:
-      <input type="text" name="telefono" required>
-    </label>
+<label>Telefono:
+  <input type="text" id="telefono" required>
+</label>
 
-    <label>Tipo di ordine:
-      <select name="tipo_ordine" id="tipo_ordine" required>
-        <option value="asporto">Asporto</option>
-        <option value="domicilio">Domicilio</option>
-      </select>
-    </label>
+<label>Tipo di ordine:
+  <select id="tipo_ordine" required>
+    <option value="asporto">Asporto</option>
+    <option value="domicilio">Domicilio</option>
+  </select>
+</label>
 
-    <div id="consegna_extra" class="hidden">
-      <label>Zona di consegna:
-        <select name="zona" id="zona">
-          <option value="marina_di_carrara">Marina di Carrara</option>
-          <option value="carrara">Carrara</option>
-          <option value="marina_di_massa">Marina di Massa</option>
-          <option value="massa">Massa</option>
-          <option value="forte_dei_marmi">Forte dei Marmi</option>
-        </select>
-      </label>
+<div id="consegna_extra" class="hidden">
+  <label>Zona di consegna:
+    <select id="zona">
+      <option value="marina_di_carrara">Marina di Carrara</option>
+      <option value="carrara">Carrara</option>
+      <option value="marina_di_massa">Marina di Massa</option>
+      <option value="massa">Massa</option>
+      <option value="forte_dei_marmi">Forte dei Marmi</option>
+    </select>
+  </label>
 
-      <label>Indirizzo:
-        <input type="text" name="indirizzo" id="indirizzo">
-      </label>
-    </div>
+  <label>Indirizzo:
+    <input type="text" id="indirizzo">
+  </label>
+</div>
 
-    <label>Orario:
-      <select name="orario" id="orario">
-        <option value="19:15">19:15</option>
-        <option value="20:00">20:00</option>
-        <option value="21:00">21:00</option>
-      </select>
-    </label>
+<label>Orario:
+  <select id="orario">
+    <option value="19:15">19:15</option>
+    <option value="20:00">20:00</option>
+    <option value="21:00">21:00</option>
+  </select>
+</label>
 
-    <label>Pizze:</label>
+<label>Pizze:</label>
 
-    <div class="pizza-item">
-      <div class="pizza-left">
-        <div class="pizza-left-top">
-          <input type="checkbox" id="margherita" name="pizza[]" value="Margherita">
-          <div class="pizza-info">
-            <strong>Margherita</strong>
-            <span>Pomodoro, mozzarella</span>
-          </div>
-        </div>
-      </div>
-      <div class="pizza-qty">
-        <input type="number" name="quantità_margherita" min="1" value="1" disabled>
+<div class="pizza-item">
+  <div class="pizza-left">
+    <div class="pizza-left-top">
+      <input type="checkbox" id="margherita" value="Margherita">
+      <div class="pizza-info">
+        <strong>Margherita</strong>
+        <span>Pomodoro, mozzarella</span>
       </div>
     </div>
+  </div>
+  <div class="pizza-qty">
+    <input type="number" id="quantità_margherita" min="1" value="1" disabled>
+  </div>
+</div>
 
-    <div class="pizza-item">
-      <div class="pizza-left">
-        <div class="pizza-left-top">
-          <input type="checkbox" id="diavola" name="pizza[]" value="Diavola">
-          <div class="pizza-info">
-            <strong>Diavola</strong>
-            <span>Pomodoro, mozzarella, salame piccante</span>
-          </div>
-        </div>
-      </div>
-      <div class="pizza-qty">
-        <input type="number" name="quantità_diavola" min="1" value="1" disabled>
-      </div>
-    </div>
-
-    <div class="pizza-item">
-      <div class="pizza-left">
-        <div class="pizza-left-top">
-          <input type="checkbox" id="capricciosa" name="pizza[]" value="Capricciosa">
-          <div class="pizza-info">
-            <strong>Capricciosa</strong>
-            <span>Pomodoro, mozzarella, funghi, prosciutto, carciofi</span>
-          </div>
-        </div>
-      </div>
-      <div class="pizza-qty">
-        <input type="number" name="quantità_capricciosa" min="1" value="1" disabled>
+<div class="pizza-item">
+  <div class="pizza-left">
+    <div class="pizza-left-top">
+      <input type="checkbox" id="diavola" value="Diavola">
+      <div class="pizza-info">
+        <strong>Diavola</strong>
+        <span>Pomodoro, mozzarella, salame piccante</span>
       </div>
     </div>
+  </div>
+  <div class="pizza-qty">
+    <input type="number" id="quantità_diavola" min="1" value="1" disabled>
+  </div>
+</div>
 
-    <label>Note aggiuntive:
-      <textarea name="note" rows="3"></textarea>
-    </label>
+<div class="pizza-item">
+  <div class="pizza-left">
+    <div class="pizza-left-top">
+      <input type="checkbox" id="capricciosa" value="Capricciosa">
+      <div class="pizza-info">
+        <strong>Capricciosa</strong>
+        <span>Pomodoro, mozzarella, funghi, prosciutto, carciofi</span>
+      </div>
+    </div>
+  </div>
+  <div class="pizza-qty">
+    <input type="number" id="quantità_capricciosa" min="1" value="1" disabled>
+  </div>
+</div>
 
-    <!-- Campo nascosto per il riepilogo -->
-    <input type="hidden" name="message" id="message">
+<label>Note aggiuntive:
+  <textarea id="note" rows="3"></textarea>
+</label>
+
+<!-- unico campo inviato a Formspree -->
+<input type="hidden" name="message" id="message">
+
 
     <button type="submit">Invia ordine</button>
   </form>
@@ -335,3 +336,4 @@ ${note}
 
 </body>
 </html>
+
