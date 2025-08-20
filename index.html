@@ -106,7 +106,7 @@
     /* Responsive */
     @media (max-width: 500px) {
       .pizza-item {
-        flex-direction: row;   /* resta in riga anche su mobile */
+        flex-direction: row;
         align-items: center;
       }
       .pizza-left {
@@ -125,7 +125,7 @@
 </header>
 
 <main>
-  <form action="https://formspree.io/f/myzpablp" method="POST">
+  <form id="ordine" action="https://formspree.io/f/myzpablp" method="POST">
 
     <label>Nome:
       <input type="text" name="nome" required>
@@ -216,8 +216,6 @@
     <label>Note aggiuntive:
       <textarea name="note" rows="3"></textarea>
     </label>
-    
-<input type="hidden" name="_next" value="https://lorenz97m.github.io/Alfiero/grazie.html">
 
     <button type="submit">Invia ordine</button>
   </form>
@@ -279,8 +277,20 @@
       qty.disabled = !this.checked;
     });
   });
+
+  // 👇 nuovo script per gestire redirect manuale dopo invio
+  const form = document.getElementById('ordine');
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const formData = new FormData(form);
+    await fetch(form.action, {
+      method: form.method,
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    });
+    window.location.href = "grazie.html";
+  });
 </script>
 
 </body>
-
 </html>
