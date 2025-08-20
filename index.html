@@ -226,11 +226,11 @@
 </main>
 
 <script>
-  const tipoOrdine = document.getElementById("tipo_ordine");
-  const consegnaExtra = document.getElementById("consegna_extra");
-  const zona = document.getElementById("zona");
-  const orario = document.getElementById("orario");
-  const indirizzo = document.querySelector('input[name="indirizzo"]');
+const nome = document.getElementById('nome').value;
+const telefono = document.getElementById('telefono').value;
+const indirizzoVal = document.getElementById('indirizzo')?.value || "—";
+const orarioVal = document.getElementById('orario').value;
+const note = document.getElementById('note').value;
 
   tipoOrdine.addEventListener("change", () => {
     if (tipoOrdine.value === "domicilio") {
@@ -336,4 +336,5 @@ ${note}
 
 </body>
 </html>
+
 
