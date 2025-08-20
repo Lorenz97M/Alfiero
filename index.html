@@ -36,7 +36,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    label { display: block; margin-top: 15px; font-family: 'Garamond', serif; }
+    label { display: block; margin-top: 15px; }
     input, select, textarea, button { 
       width: 100%; 
       padding: 10px; 
@@ -52,7 +52,6 @@
 
     .hidden { display: none; }
 
-    /* Stile pizza */
     .pizza-item {
       display: flex;
       align-items: center;
@@ -63,19 +62,11 @@
       padding: 10px 15px;
       margin-bottom: 12px;
       transition: transform 0.2s;
-      font-family: 'Garamond', serif;
     }
     .pizza-item:hover { transform: translateY(-2px); }
 
-    .pizza-left {
-      display: flex;
-      align-items: flex-start;
-    }
-
-    .pizza-left-top {
-      display: flex;
-      align-items: flex-start;
-    }
+    .pizza-left { display: flex; align-items: flex-start; }
+    .pizza-left-top { display: flex; align-items: flex-start; }
 
     .pizza-left-top input[type="checkbox"] {
       width: 20px;
@@ -85,17 +76,8 @@
       margin-top: 4px;
     }
 
-    .pizza-info strong {
-      font-size: 18px;
-      color: #d32f2f;
-    }
-
-    .pizza-info span {
-      font-size: 14px;
-      color: #555;
-      margin-top: 2px;
-      display: block;
-    }
+    .pizza-info strong { font-size: 18px; color: #d32f2f; }
+    .pizza-info span { font-size: 14px; color: #555; margin-top: 2px; display: block; }
 
     .pizza-qty input[type="number"] {
       width: 60px;
@@ -103,18 +85,10 @@
       padding: 5px;
     }
 
-    /* Responsive */
     @media (max-width: 500px) {
-      .pizza-item {
-        flex-direction: row;
-        align-items: center;
-      }
-      .pizza-left {
-        flex: 1;
-      }
-      .pizza-qty {
-        margin-left: 10px;
-      }
+      .pizza-item { flex-direction: row; align-items: center; }
+      .pizza-left { flex: 1; }
+      .pizza-qty { margin-left: 10px; }
     }
   </style>
 </head>
@@ -128,15 +102,15 @@
   <form id="ordine" action="https://formspree.io/f/myzpablp" method="POST">
 
     <label>Nome:
-      <input type="text" name="nome" required>
+      <input type="text" id="nome" required>
     </label>
 
     <label>Telefono:
-      <input type="text" name="telefono" required>
+      <input type="text" id="telefono" required>
     </label>
 
     <label>Tipo di ordine:
-      <select name="tipo_ordine" id="tipo_ordine" required>
+      <select id="tipo_ordine" required>
         <option value="asporto">Asporto</option>
         <option value="domicilio">Domicilio</option>
       </select>
@@ -144,7 +118,7 @@
 
     <div id="consegna_extra" class="hidden">
       <label>Zona di consegna:
-        <select name="zona" id="zona">
+        <select id="zona">
           <option value="marina_di_carrara">Marina di Carrara</option>
           <option value="carrara">Carrara</option>
           <option value="marina_di_massa">Marina di Massa</option>
@@ -154,12 +128,12 @@
       </label>
 
       <label>Indirizzo:
-        <input type="text" name="indirizzo" id="indirizzo">
+        <input type="text" id="indirizzo">
       </label>
     </div>
 
     <label>Orario:
-      <select name="orario" id="orario">
+      <select id="orario">
         <option value="19:15">19:15</option>
         <option value="20:00">20:00</option>
         <option value="21:00">21:00</option>
@@ -171,7 +145,7 @@
     <div class="pizza-item">
       <div class="pizza-left">
         <div class="pizza-left-top">
-          <input type="checkbox" id="margherita" name="pizza[]" value="Margherita">
+          <input type="checkbox" value="Margherita">
           <div class="pizza-info">
             <strong>Margherita</strong>
             <span>Pomodoro, mozzarella</span>
@@ -179,14 +153,14 @@
         </div>
       </div>
       <div class="pizza-qty">
-        <input type="number" name="quantità_margherita" min="1" value="1" disabled>
+        <input type="number" min="1" value="1" disabled>
       </div>
     </div>
 
     <div class="pizza-item">
       <div class="pizza-left">
         <div class="pizza-left-top">
-          <input type="checkbox" id="diavola" name="pizza[]" value="Diavola">
+          <input type="checkbox" value="Diavola">
           <div class="pizza-info">
             <strong>Diavola</strong>
             <span>Pomodoro, mozzarella, salame piccante</span>
@@ -194,14 +168,14 @@
         </div>
       </div>
       <div class="pizza-qty">
-        <input type="number" name="quantità_diavola" min="1" value="1" disabled>
+        <input type="number" min="1" value="1" disabled>
       </div>
     </div>
 
     <div class="pizza-item">
       <div class="pizza-left">
         <div class="pizza-left-top">
-          <input type="checkbox" id="capricciosa" name="pizza[]" value="Capricciosa">
+          <input type="checkbox" value="Capricciosa">
           <div class="pizza-info">
             <strong>Capricciosa</strong>
             <span>Pomodoro, mozzarella, funghi, prosciutto, carciofi</span>
@@ -209,15 +183,15 @@
         </div>
       </div>
       <div class="pizza-qty">
-        <input type="number" name="quantità_capricciosa" min="1" value="1" disabled>
+        <input type="number" min="1" value="1" disabled>
       </div>
     </div>
 
     <label>Note aggiuntive:
-      <textarea name="note" rows="3"></textarea>
+      <textarea id="note" rows="3"></textarea>
     </label>
 
-    <!-- Campo nascosto per il riepilogo -->
+    <!-- L’unico campo inviato a Formspree -->
     <input type="hidden" name="message" id="message">
 
     <button type="submit">Invia ordine</button>
@@ -229,7 +203,7 @@
   const consegnaExtra = document.getElementById("consegna_extra");
   const zona = document.getElementById("zona");
   const orario = document.getElementById("orario");
-  const indirizzo = document.querySelector('input[name="indirizzo"]');
+  const indirizzo = document.getElementById("indirizzo");
 
   tipoOrdine.addEventListener("change", () => {
     if (tipoOrdine.value === "domicilio") {
@@ -248,30 +222,15 @@
   function aggiornaOrari() {
     orario.innerHTML = "";
     if (zona.value === "forte_dei_marmi") {
-      ["19:15", "20:00", "21:00"].forEach(h => {
-        let opt = document.createElement("option");
-        opt.value = h;
-        opt.textContent = h;
-        orario.appendChild(opt);
-      });
+      ["19:15", "20:00", "21:00"].forEach(h => orario.append(new Option(h,h)));
     } else {
-      ["19:15", "21:00"].forEach(h => {
-        let opt = document.createElement("option");
-        opt.value = h;
-        opt.textContent = h;
-        orario.appendChild(opt);
-      });
+      ["19:15", "21:00"].forEach(h => orario.append(new Option(h,h)));
     }
   }
 
   function resetOrariAsporto() {
     orario.innerHTML = "";
-    ["19:15", "20:00", "21:00"].forEach(h => {
-      let opt = document.createElement("option");
-      opt.value = h;
-      opt.textContent = h;
-      orario.appendChild(opt);
-    });
+    ["19:15", "20:00", "21:00"].forEach(h => orario.append(new Option(h,h)));
   }
 
   document.querySelectorAll('.pizza-item input[type="checkbox"]').forEach(chk => {
@@ -281,21 +240,21 @@
     });
   });
 
-  // 👇 script per invio + email riassuntiva
+  // Invio form
   const form = document.getElementById('ordine');
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
 
     // recupero valori
-    const nome = form.querySelector('input[name="nome"]').value;
-    const telefono = form.querySelector('input[name="telefono"]').value;
-    const indirizzoVal = form.querySelector('input[name="indirizzo"]')?.value || "—";
-    const orarioVal = form.querySelector('select[name="orario"]').value;
-    const note = form.querySelector('textarea[name="note"]').value;
+    const nome = document.getElementById('nome').value;
+    const telefono = document.getElementById('telefono').value;
+    const indirizzoVal = document.getElementById('indirizzo')?.value || "—";
+    const orarioVal = document.getElementById('orario').value;
+    const note = document.getElementById('note').value;
 
     // Pizze scelte
     let pizze = [];
-    form.querySelectorAll('.pizza-item').forEach(item => {
+    document.querySelectorAll('.pizza-item').forEach(item => {
       const chk = item.querySelector('input[type="checkbox"]');
       const qty = item.querySelector('input[type="number"]');
       if (chk.checked) {
@@ -304,8 +263,7 @@
     });
 
     // testo riassuntivo
-    const riassunto = `
-Ordine Pizza
+    const riassunto = `Ordine Pizza
 Nome: ${nome}
 Telefono: ${telefono}
 Indirizzo: ${indirizzoVal}
@@ -315,21 +273,23 @@ Pizze:
 ${pizze.join("\n")}
 
 Note aggiuntive:
-${note}
-    `;
+${note}`;
 
     document.getElementById('message').value = riassunto;
 
     // invio a Formspree
     const formData = new FormData(form);
-    await fetch(form.action, {
+    const response = await fetch(form.action, {
       method: form.method,
       body: formData,
       headers: { 'Accept': 'application/json' }
     });
 
-    // redirect
-    window.location.href = "grazie.html";
+    if (response.ok) {
+      window.location.href = "grazie.html";
+    } else {
+      alert("Errore nell'invio dell'ordine. Riprova.");
+    }
   });
 </script>
 
