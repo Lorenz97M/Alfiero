@@ -127,110 +127,109 @@
 <main>
   <form id="ordine" action="https://formspree.io/f/myzpablp" method="POST">
 
-<label>Nome:
-  <input type="text" id="nome" required>
-</label>
+    <label>Nome:
+      <input type="text" name="nome" required>
+    </label>
 
-<label>Telefono:
-  <input type="text" id="telefono" required>
-</label>
+    <label>Telefono:
+      <input type="text" name="telefono" required>
+    </label>
 
-<label>Tipo di ordine:
-  <select id="tipo_ordine" required>
-    <option value="asporto">Asporto</option>
-    <option value="domicilio">Domicilio</option>
-  </select>
-</label>
+    <label>Tipo di ordine:
+      <select name="tipo_ordine" id="tipo_ordine" required>
+        <option value="asporto">Asporto</option>
+        <option value="domicilio">Domicilio</option>
+      </select>
+    </label>
 
-<div id="consegna_extra" class="hidden">
-  <label>Zona di consegna:
-    <select id="zona">
-      <option value="marina_di_carrara">Marina di Carrara</option>
-      <option value="carrara">Carrara</option>
-      <option value="marina_di_massa">Marina di Massa</option>
-      <option value="massa">Massa</option>
-      <option value="forte_dei_marmi">Forte dei Marmi</option>
-    </select>
-  </label>
+    <div id="consegna_extra" class="hidden">
+      <label>Zona di consegna:
+        <select name="zona" id="zona">
+          <option value="marina_di_carrara">Marina di Carrara</option>
+          <option value="carrara">Carrara</option>
+          <option value="marina_di_massa">Marina di Massa</option>
+          <option value="massa">Massa</option>
+          <option value="forte_dei_marmi">Forte dei Marmi</option>
+        </select>
+      </label>
 
-  <label>Indirizzo:
-    <input type="text" id="indirizzo">
-  </label>
-</div>
+      <label>Indirizzo:
+        <input type="text" name="indirizzo" id="indirizzo">
+      </label>
+    </div>
 
-<label>Orario:
-  <select id="orario">
-    <option value="19:15">19:15</option>
-    <option value="20:00">20:00</option>
-    <option value="21:00">21:00</option>
-  </select>
-</label>
+    <label>Orario:
+      <select name="orario" id="orario">
+        <option value="19:15">19:15</option>
+        <option value="20:00">20:00</option>
+        <option value="21:00">21:00</option>
+      </select>
+    </label>
 
-<label>Pizze:</label>
+    <label>Pizze:</label>
 
-<div class="pizza-item">
-  <div class="pizza-left">
-    <div class="pizza-left-top">
-      <input type="checkbox" id="margherita" value="Margherita">
-      <div class="pizza-info">
-        <strong>Margherita</strong>
-        <span>Pomodoro, mozzarella</span>
+    <div class="pizza-item">
+      <div class="pizza-left">
+        <div class="pizza-left-top">
+          <input type="checkbox" id="margherita" name="pizza[]" value="Margherita">
+          <div class="pizza-info">
+            <strong>Margherita</strong>
+            <span>Pomodoro, mozzarella</span>
+          </div>
+        </div>
+      </div>
+      <div class="pizza-qty">
+        <input type="number" name="quantità_margherita" min="1" value="1" disabled>
       </div>
     </div>
-  </div>
-  <div class="pizza-qty">
-    <input type="number" id="quantità_margherita" min="1" value="1" disabled>
-  </div>
-</div>
 
-<div class="pizza-item">
-  <div class="pizza-left">
-    <div class="pizza-left-top">
-      <input type="checkbox" id="diavola" value="Diavola">
-      <div class="pizza-info">
-        <strong>Diavola</strong>
-        <span>Pomodoro, mozzarella, salame piccante</span>
+    <div class="pizza-item">
+      <div class="pizza-left">
+        <div class="pizza-left-top">
+          <input type="checkbox" id="diavola" name="pizza[]" value="Diavola">
+          <div class="pizza-info">
+            <strong>Diavola</strong>
+            <span>Pomodoro, mozzarella, salame piccante</span>
+          </div>
+        </div>
+      </div>
+      <div class="pizza-qty">
+        <input type="number" name="quantità_diavola" min="1" value="1" disabled>
       </div>
     </div>
-  </div>
-  <div class="pizza-qty">
-    <input type="number" id="quantità_diavola" min="1" value="1" disabled>
-  </div>
-</div>
 
-<div class="pizza-item">
-  <div class="pizza-left">
-    <div class="pizza-left-top">
-      <input type="checkbox" id="capricciosa" value="Capricciosa">
-      <div class="pizza-info">
-        <strong>Capricciosa</strong>
-        <span>Pomodoro, mozzarella, funghi, prosciutto, carciofi</span>
+    <div class="pizza-item">
+      <div class="pizza-left">
+        <div class="pizza-left-top">
+          <input type="checkbox" id="capricciosa" name="pizza[]" value="Capricciosa">
+          <div class="pizza-info">
+            <strong>Capricciosa</strong>
+            <span>Pomodoro, mozzarella, funghi, prosciutto, carciofi</span>
+          </div>
+        </div>
+      </div>
+      <div class="pizza-qty">
+        <input type="number" name="quantità_capricciosa" min="1" value="1" disabled>
       </div>
     </div>
-  </div>
-  <div class="pizza-qty">
-    <input type="number" id="quantità_capricciosa" min="1" value="1" disabled>
-  </div>
-</div>
 
-<label>Note aggiuntive:
-  <textarea id="note" rows="3"></textarea>
-</label>
+    <label>Note aggiuntive:
+      <textarea name="note" rows="3"></textarea>
+    </label>
 
-<!-- unico campo inviato a Formspree -->
-<input type="hidden" name="message" id="message">
-
+    <!-- Campo nascosto per il riepilogo -->
+    <input type="hidden" name="message" id="message">
 
     <button type="submit">Invia ordine</button>
   </form>
 </main>
 
 <script>
-const tipoOrdine = document.getElementById("tipo_ordine"); 
-const consegnaExtra = document.getElementById("consegna_extra"); 
-const zona = document.getElementById("zona");
-const orario = document.getElementById("orario"); 
-const indirizzo = document.querySelector('input[name="indirizzo"]');
+  const tipoOrdine = document.getElementById("tipo_ordine");
+  const consegnaExtra = document.getElementById("consegna_extra");
+  const zona = document.getElementById("zona");
+  const orario = document.getElementById("orario");
+  const indirizzo = document.querySelector('input[name="indirizzo"]');
 
   tipoOrdine.addEventListener("change", () => {
     if (tipoOrdine.value === "domicilio") {
@@ -288,11 +287,11 @@ const indirizzo = document.querySelector('input[name="indirizzo"]');
     e.preventDefault();
 
     // recupero valori
-const nome = document.getElementById('nome').value;
-const telefono = document.getElementById('telefono').value;
-const indirizzoVal = document.getElementById('indirizzo')?.value || "—";
-const orarioVal = document.getElementById('orario').value;
-const note = document.getElementById('note').value;
+    const nome = form.querySelector('input[name="nome"]').value;
+    const telefono = form.querySelector('input[name="telefono"]').value;
+    const indirizzoVal = form.querySelector('input[name="indirizzo"]')?.value || "—";
+    const orarioVal = form.querySelector('select[name="orario"]').value;
+    const note = form.querySelector('textarea[name="note"]').value;
 
     // Pizze scelte
     let pizze = [];
@@ -336,6 +335,3 @@ ${note}
 
 </body>
 </html>
-
-
-
